@@ -1,0 +1,186 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 27-07-2026 a las 22:44:55
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.0.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `proyecto`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `gestion_usuarios`
+--
+
+CREATE TABLE `gestion_usuarios` (
+  `ID` int(11) NOT NULL,
+  `Nombre` varchar(20) NOT NULL,
+  `Apellido` varchar(30) NOT NULL,
+  `Pass` varchar(100) NOT NULL,
+  `Email` varchar(30) NOT NULL,
+  `Fmod` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `Fcreacion` date NOT NULL DEFAULT current_timestamp(),
+  `Rol` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `gestion_usuarios`
+--
+
+INSERT INTO `gestion_usuarios` (`ID`, `Nombre`, `Apellido`, `Pass`, `Email`, `Fmod`, `Fcreacion`, `Rol`) VALUES
+(10, 'admin', 'Batalla', 'admin', 'adminBatalla2006@gmail.com', '2025-11-03 18:53:21', '2025-10-24', 1),
+(18, 'funcionario', 'Acosta', 'funcionario', 'Fun@gmail.com', '2025-11-03 18:59:15', '2025-11-03', 3),
+(21, 'supervisor', 'sad', 'supervisor', 'asdasdas@gmail.com', '2025-11-04 22:23:41', '2025-11-04', 2),
+(22, 'Agus', 'sad', 'Agus', 'asdasdas@gmail.com', '2025-11-04 22:44:05', '2025-11-04', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `horariospoliticas`
+--
+
+CREATE TABLE `horariospoliticas` (
+  `ID` int(11) NOT NULL,
+  `Tipo` text NOT NULL,
+  `Hinicio` time NOT NULL,
+  `Hfin` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `horariospoliticas`
+--
+
+INSERT INTO `horariospoliticas` (`ID`, `Tipo`, `Hinicio`, `Hfin`) VALUES
+(18, 'Entrada', '21:00:00', '22:00:00'),
+(19, 'Salida', '21:00:00', '21:40:00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `marcas`
+--
+
+CREATE TABLE `marcas` (
+  `ID` int(11) NOT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
+  `Tipo` enum('Entrada','Salida','Pausa','Regreso') DEFAULT NULL,
+  `Fecha` datetime DEFAULT current_timestamp(),
+  `Comentario` varchar(255) DEFAULT NULL,
+  `Estado` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `marcas`
+--
+
+INSERT INTO `marcas` (`ID`, `id_usuario`, `Tipo`, `Fecha`, `Comentario`, `Estado`) VALUES
+(17, 3, 'Entrada', '2025-10-28 22:05:18', '', 'Pendiente'),
+(18, 3, 'Salida', '2025-10-28 22:05:28', '', 'Pendiente'),
+(19, 3, 'Pausa', '2025-10-28 22:05:35', '', 'Pendiente'),
+(49, 18, 'Entrada', '2025-11-04 20:48:22', '', 'Validado'),
+(50, 22, 'Entrada', '2025-11-04 21:09:50', '', 'Rechazado'),
+(51, 22, 'Entrada', '2025-11-04 21:11:43', '', 'Validado'),
+(52, 22, 'Salida', '2025-11-04 21:11:48', '', 'Pendiente'),
+(53, 22, 'Entrada', '2025-11-04 21:14:06', '', 'Pendiente'),
+(54, 18, 'Entrada', '2025-11-04 21:15:10', '', 'Pendiente'),
+(55, 22, 'Pausa', '2025-11-04 21:17:02', '', 'Rechazado'),
+(56, 18, 'Salida', '2025-11-04 21:58:44', '', 'Rechazado'),
+(57, 18, 'Entrada', '2025-11-10 16:21:05', '', 'Validado'),
+(58, 18, 'Salida', '2025-11-10 16:23:19', '', 'Pendiente'),
+(59, 18, 'Entrada', '2025-11-10 16:34:12', '', 'Pendiente');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `politicaspausas`
+--
+
+CREATE TABLE `politicaspausas` (
+  `ID` int(11) NOT NULL,
+  `Nombrepausa` varchar(30) NOT NULL,
+  `H_inicio` time NOT NULL,
+  `H_fin` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `politicaspausas`
+--
+
+INSERT INTO `politicaspausas` (`ID`, `Nombrepausa`, `H_inicio`, `H_fin`) VALUES
+(9, 'Almuerzo', '10:00:00', '10:20:00');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `gestion_usuarios`
+--
+ALTER TABLE `gestion_usuarios`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indices de la tabla `horariospoliticas`
+--
+ALTER TABLE `horariospoliticas`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indices de la tabla `marcas`
+--
+ALTER TABLE `marcas`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indices de la tabla `politicaspausas`
+--
+ALTER TABLE `politicaspausas`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `gestion_usuarios`
+--
+ALTER TABLE `gestion_usuarios`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT de la tabla `horariospoliticas`
+--
+ALTER TABLE `horariospoliticas`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `marcas`
+--
+ALTER TABLE `marcas`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+
+--
+-- AUTO_INCREMENT de la tabla `politicaspausas`
+--
+ALTER TABLE `politicaspausas`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
