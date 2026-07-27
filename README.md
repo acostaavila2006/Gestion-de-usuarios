@@ -14,3 +14,4 @@ Sistema web desarrollado con HTML, CSS, MySQL, PHP y JS
 -Clonar el repositorio.
 -Importar la base de datos.
 -Ejecutar el proyecto en XAMPP.
+-En "Capturas" se pueden ver imágenes de distintas partes del proyecto.
